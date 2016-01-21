@@ -9,12 +9,16 @@ namespace TemplateEngine.Docx.Processors
 		internal XDocument MainPart { get; private set; }
 		internal XDocument NumberingPart { get; private set; }
 		internal XDocument StylesPart { get; private set; }
-		internal ProcessContext(XDocument mainPart, XDocument numberingPart, XDocument stylesPart)
-		{
+        internal XDocument HeaderPart { get; private set; }
+        internal XDocument FooterPart { get; private set; }
+        internal ProcessContext(XDocument mainPart, XDocument numberingPart, XDocument stylesPart, XDocument headerPart, XDocument footerPart)
+        {
 			LastNumIds = new Dictionary<int, int>();
 			MainPart = mainPart;
 			NumberingPart = numberingPart;
 			StylesPart = stylesPart;
-		}
+            HeaderPart = headerPart;
+            FooterPart = footerPart;
+        }
 	}
 }

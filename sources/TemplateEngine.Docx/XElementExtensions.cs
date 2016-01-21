@@ -10,6 +10,7 @@ namespace TemplateEngine.Docx
 		// Set content control value th the new value
 		public static void ReplaceContentControlWithNewValue(this XElement sdt, string newValue)
 		{
+            newValue = newValue ?? string.Empty;
 
 			var sdtContentElement = sdt.Element(W.sdtContent);
 

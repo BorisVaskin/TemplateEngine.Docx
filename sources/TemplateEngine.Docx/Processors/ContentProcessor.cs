@@ -9,9 +9,11 @@ namespace TemplateEngine.Docx.Processors
 		private bool _isNeedToRemoveContentControls;
 
 		private readonly List<IProcessor> _processors;
+        private readonly ProcessContext Ctx;
 
 		internal ContentProcessor(ProcessContext context)
 		{
+            Ctx = context;
 			_processors = new List<IProcessor>
 			{
 				new FieldsProcessor(context),
@@ -30,7 +32,52 @@ namespace TemplateEngine.Docx.Processors
 			return this;
 		}
 
-		public ProcessResult FillContent(XElement content, IEnumerable<IContentItem> data)
+        public ProcessResult FillContentEverywhere(Content content)
+        {
+            List<XElement> documentPartsToInsertContentTo = new List<XElement>();
+            documentPartsToInsertContentTo.Add(Ctx.MainPart.Root.Element(W.body));
+            if (Ctx.HeaderPart != null) { documentPartsToInsertContentTo.Add(Ctx.HeaderPart?.Root); }
+            if (Ctx.FooterPart != null) { documentPartsToInsertContentTo.Add(Ctx.FooterPart?.Root); }
+
+            var errors = new List<string>();
+            var data = content.ToList();
+            var processedItems = new List<string>();
+
+            foreach (var contentItems in data.GroupBy(d => d.Name))
+            {
+                if (processedItems.Contains(contentItems.Key)) continue;
+
+                foreach (var documentPart in documentPartsToInsertContentTo)
+                {
+                    if (documentPart == null) continue;
+                    var contentControls = FindContentControls(documentPart, contentItems.Key).ToList();
+
+                    //Need to get error message from processor.
+                    if (!contentControls.Any())
+                        contentControls.Add(null);
+
+                    foreach (var xElement in contentControls)
+                    {
+                        if (contentItems.Any(item => item is TableContent) && xElement != null)
+                            processedItems.AddRange(ProcessTableFields(data.OfType<FieldContent>(), xElement));
+
+
+                        foreach (var processor in _processors)
+                        {
+                            var result = processor.FillContent(xElement, contentItems);
+                            if (result.Handled && !result.Success)
+                                errors.AddRange(result.Errors);
+                        }
+                    }
+                }
+                processedItems.Add(contentItems.Key);
+            }
+            return errors.Any()
+                ? ProcessResult.ErrorResult(errors)
+                : ProcessResult.SuccessResult;
+        }
+
+        public ProcessResult FillContent(XElement content, IEnumerable<IContentItem> data)
 		{
 			var errors = new List<string>();
 			var processedItems = new List<string>();

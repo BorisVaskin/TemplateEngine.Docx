@@ -14,9 +14,10 @@ namespace TemplateEngine.Docx.Example
 	        var valuesToFill = new Content(
 		        // Add field.
 		        new FieldContent("Report date", DateTime.Now.ToString()),
+		        new FieldContent("ReportDate", DateTime.Now.ToString()),
 
-		        // Add table.
-		        new TableContent("Team Members Table")
+                // Add table.
+                new TableContent("Team Members Table")
 			        .AddRow(
 				        new FieldContent("Name", "Eric"),
 				        new FieldContent("Role", "Program Manager"))
@@ -141,7 +142,10 @@ namespace TemplateEngine.Docx.Example
             using(var outputDocument = new TemplateProcessor("OutputDocument.docx")
 				.SetRemoveContentControls(true))
             {
-                outputDocument.FillContent(valuesToFill);
+                outputDocument
+                    .SetNoticeAboutErrors(false)
+                    .SetRemoveContentControls(false)
+                    .FillContentEverywhere(valuesToFill);
                 outputDocument.SaveChanges();
             }
         }
