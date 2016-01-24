@@ -15,15 +15,18 @@ namespace TemplateEngine.Docx.Example
 		        // Add field.
 		        new FieldContent("Report date", DateTime.Now.ToString()),
 		        new FieldContent("ReportDate", DateTime.Now.ToString()),
+                new ImageContent("ReportLogo", File.ReadAllBytes("Tesla.jpg")),
 
                 // Add table.
                 new TableContent("Team Members Table")
 			        .AddRow(
 				        new FieldContent("Name", "Eric"),
-				        new FieldContent("Role", "Program Manager"))
-			        .AddRow(
+				        new FieldContent("Role", "Program Manager"),
+                        new ImageContent("Avatar", File.ReadAllBytes("Tesla.jpg")))
+                    .AddRow(
 				        new FieldContent("Name", "Bob"),
-				        new FieldContent("Role", "Developer")),
+				        new FieldContent("Role", "Developer"),
+                        new ImageContent("Avatar", File.ReadAllBytes("Tesla.jpg"))),
 
 				// Add field inside table that not to propagate.
 		        new FieldContent("Count", "2"),
@@ -137,7 +140,8 @@ namespace TemplateEngine.Docx.Example
 						new FieldContent("Name", "Ann"),
 						new FieldContent("Role", "Developer"),
 						new FieldContent("Age", "34"),
-						new FieldContent("Projects", "Project two")));
+						new FieldContent("Projects", "Project two"))
+            );
 
             using(var outputDocument = new TemplateProcessor("OutputDocument.docx")
 				.SetRemoveContentControls(true))

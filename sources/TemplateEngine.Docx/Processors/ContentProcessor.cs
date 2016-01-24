@@ -18,7 +18,8 @@ namespace TemplateEngine.Docx.Processors
 			{
 				new FieldsProcessor(context),
 				new TableProcessor(context),
-				new ListProcessor(context)			
+				new ListProcessor(context),
+                new ImagesProcessor(context)
 			};
 		}
 
@@ -34,10 +35,7 @@ namespace TemplateEngine.Docx.Processors
 
         public ProcessResult FillContentEverywhere(Content content)
         {
-            List<XElement> documentPartsToInsertContentTo = new List<XElement>();
-            documentPartsToInsertContentTo.Add(Ctx.MainPart.Root.Element(W.body));
-            if (Ctx.HeaderPart != null) { documentPartsToInsertContentTo.Add(Ctx.HeaderPart?.Root); }
-            if (Ctx.FooterPart != null) { documentPartsToInsertContentTo.Add(Ctx.FooterPart?.Root); }
+
 
             var errors = new List<string>();
             var data = content.ToList();
@@ -47,7 +45,7 @@ namespace TemplateEngine.Docx.Processors
             {
                 if (processedItems.Contains(contentItems.Key)) continue;
 
-                foreach (var documentPart in documentPartsToInsertContentTo)
+                foreach (var documentPart in Ctx.ContainerParts)
                 {
                     if (documentPart == null) continue;
                     var contentControls = FindContentControls(documentPart, contentItems.Key).ToList();

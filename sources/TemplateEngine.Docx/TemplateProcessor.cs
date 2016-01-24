@@ -122,7 +122,7 @@ namespace TemplateEngine.Docx
         {
 			var processResult =
 		        new ContentProcessor(
-					new ProcessContext(Document, NumberingPart, StylesPart, HeaderPart, FooterPart))
+					new ProcessContext(_wordDocument, Document, NumberingPart, StylesPart, HeaderPart, FooterPart))
 					.SetRemoveContentControls(_isNeedToRemoveContentControls)
 			        .FillContent(Document.Root.Element(W.body), content);
 
@@ -136,7 +136,7 @@ namespace TemplateEngine.Docx
         {
             var processResult =
                 new ContentProcessor(
-                    new ProcessContext(Document, NumberingPart, StylesPart, HeaderPart, FooterPart))
+                    new ProcessContext(_wordDocument, Document, NumberingPart, StylesPart, HeaderPart, FooterPart))
                     .SetRemoveContentControls(_isNeedToRemoveContentControls)
                     .FillContentEverywhere(content);
 

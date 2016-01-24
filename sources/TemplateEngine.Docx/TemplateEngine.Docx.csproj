@@ -46,11 +46,14 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ListItem.cs" />
-    <Compile Include="ListItemRetriever.cs" />
-    <Compile Include="NumberingAccessor.cs" />
+    <Compile Include="Helpers\ListItem.cs" />
+    <Compile Include="Helpers\ListItemRetriever.cs" />
+    <Compile Include="Helpers\NumberingAccessor.cs" />
+    <Compile Include="OpenXMLHelpers\A.cs" />
+    <Compile Include="OpenXMLHelpers\R.cs" />
     <Compile Include="Processors\ContentProcessor.cs" />
     <Compile Include="Processors\FieldsProcessor.cs" />
+    <Compile Include="Processors\ImageProcessor.cs" />
     <Compile Include="Processors\IProcessor.cs" />
     <Compile Include="Processors\ListProcessor.cs" />
     <Compile Include="Processors\ProcessContext.cs" />
@@ -61,13 +64,14 @@
     <Compile Include="TemplateCustomContent\FieldContent.cs" />
     <Compile Include="TemplateCustomContent\IContentItem.cs" />
     <Compile Include="TemplateCustomContent\Container.cs" />
+    <Compile Include="TemplateCustomContent\ImageContent.cs" />
     <Compile Include="TemplateCustomContent\ListContent.cs" />
     <Compile Include="TemplateCustomContent\ListItemContent.cs" />
     <Compile Include="TemplateCustomContent\TableContent.cs" />
     <Compile Include="TemplateCustomContent\TableRowContent.cs" />
     <Compile Include="TemplateProcessor.cs" />
-    <Compile Include="W.cs" />
-    <Compile Include="XElementExtensions.cs" />
+    <Compile Include="OpenXMLHelpers\W.cs" />
+    <Compile Include="OpenXMLHelpers\XElementExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
