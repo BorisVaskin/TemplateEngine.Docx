@@ -71,17 +71,26 @@ namespace TemplateEngine.Docx.Processors
                 return;
             }
 
-            var imageId = blip.Attribute(R.embed).Value;
-
-            var xmlPart = _context.WordDocument.MainDocumentPart.GetPartById(imageId);
-            if (xmlPart is ImagePart)
+            // Creating a new image part
+            var imagePart = _context.WordDocument.MainDocumentPart.AddImagePart(field.Type);
+            // Writing image bytes to it
+            using (BinaryWriter writer = new BinaryWriter(imagePart.GetStream()))
             {
-                ImagePart imagePart = xmlPart as ImagePart;
-                using (BinaryWriter writer = new BinaryWriter(imagePart.GetStream()))
-                {
-                    writer.Write(field.Binary);
-                }
+                writer.Write(field.Binary);
             }
+            // Setting reference for CC to newly uploaded image
+            blip.Attribute(R.embed).Value = _context.WordDocument.MainDocumentPart.GetIdOfPart(imagePart);
+
+            //var imageId = blip.Attribute(R.embed).Value;
+            //var xmlPart = _context.WordDocument.MainDocumentPart.GetPartById(imageId);
+            //if (xmlPart is ImagePart)
+            //{
+            //    ImagePart imagePart = xmlPart as ImagePart;
+            //    using (BinaryWriter writer = new BinaryWriter(imagePart.GetStream()))
+            //    {
+            //        writer.Write(field.Binary);
+            //    }
+            //}
         }
     }
 }

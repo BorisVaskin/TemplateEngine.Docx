@@ -64,6 +64,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Setter.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Tesla.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

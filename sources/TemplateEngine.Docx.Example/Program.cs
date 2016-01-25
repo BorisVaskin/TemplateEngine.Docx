@@ -26,7 +26,7 @@ namespace TemplateEngine.Docx.Example
                     .AddRow(
 				        new FieldContent("Name", "Bob"),
 				        new FieldContent("Role", "Developer"),
-                        new ImageContent("Avatar", File.ReadAllBytes("Tesla.jpg"))),
+                        new ImageContent("Avatar", File.ReadAllBytes("Setter.jpg"))),
 
 				// Add field inside table that not to propagate.
 		        new FieldContent("Count", "2"),
