@@ -72,7 +72,7 @@ namespace TemplateEngine.Docx.Processors
             }
 
             // Creating a new image part
-            var imagePart = _context.WordDocument.MainDocumentPart.AddImagePart(field.Type);
+            var imagePart = _context.WordDocument.MainDocumentPart.AddImagePart(field.MIMEType);
             // Writing image bytes to it
             using (BinaryWriter writer = new BinaryWriter(imagePart.GetStream()))
             {

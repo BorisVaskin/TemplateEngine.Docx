@@ -9,15 +9,21 @@ namespace TemplateEngine.Docx
 
         }
 
-        public ImageContent(string name, byte[] binary, ImagePartType type = ImagePartType.Jpeg)
+        public ImageContent(string name, byte[] binary)
         {
             Name = name;
             Binary = binary;
-            Type = type;
+            MIMEType = "image/jpeg";
+        }
+
+        public ImageContent(string name, byte[] binary, string mimeType)
+            :this(name, binary)
+        {
+            if (!string.IsNullOrEmpty(mimeType)) { MIMEType = mimeType; }
         }
 
         public string Name { get; set; }
         public byte[] Binary { get; set; }
-        public ImagePartType Type { get; set; }
+        public string MIMEType { get; set; }
     }
 }
